@@ -10,10 +10,12 @@ function log() {
         else if (typeof msg !== 'string') {
             msg = JSON.stringify(msg, null, 2);
         }
+        debugger;
         document.getElementById('results').innerHTML += msg + '\r\n';
     });
 }
 
+debugger;
 document.getElementById("login").addEventListener("click", login, false);
 document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
@@ -21,10 +23,10 @@ document.getElementById("logout").addEventListener("click", logout, false);
 var config = {
     authority: "http://localhost/IdentityServer",
     client_id: "js",
-    redirect_uri: "http://localhost:5003/callback.html",
+    redirect_uri: "http://localhost:61039/src/callback.html",
     response_type: "id_token token",
     scope:"openid profile api1",
-    post_logout_redirect_uri : "http://localhost:5003/index.html",
+    post_logout_redirect_uri: "http://localhost:61039/index.html",
 };
 var mgr = new Oidc.UserManager(config);
 
@@ -38,6 +40,7 @@ mgr.getUser().then(function (user) {
 });
 
 function login() {
+    debugger;
     mgr.signinRedirect();
 }
 

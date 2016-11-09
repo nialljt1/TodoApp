@@ -105,15 +105,15 @@ namespace QuickstartIdentityServer
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:5003/callback.html"
+                        "http://localhost:61039/src/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:5003/index.html"
+                        "http://localhost:61039/src/index1.html"
                     },
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:5003"
+                        "http://localhost:61039"
                     },
 
                     AllowedScopes = new List<string>

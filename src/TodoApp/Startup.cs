@@ -51,12 +51,6 @@ namespace TodoApp
                     .WithOrigins("http://localhost:61039")
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-
-                options.AddPolicy("AllowSpecificOrigin",
-                builder => builder
-                .WithOrigins("http://localhost")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
             });
             services.AddMvc();
         }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+using Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,12 +27,28 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ITodosRepository, TodosRepository>();
             services.AddCors(options=>
             {
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5003")
+                    policy.WithOrigins("http://localhost:61039")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default1", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5001")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+
+                options.AddPolicy("default2", policy =>
+                {
+                    policy.WithOrigins("http://localhost:61039")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -52,7 +69,7 @@ namespace Api
 
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                Authority = "http://localhost:5000",
+                Authority = "http://localhost/IdentityServer",
                 ScopeName = "api1",
 
                 RequireHttpsMetadata = false
