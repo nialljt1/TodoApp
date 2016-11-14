@@ -2,10 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using IdentityServer4;
+using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using QuickstartIdentityServer.Data.Context;
+using System.Linq;
+using System.Reflection;
 
 namespace QuickstartIdentityServer
 {
@@ -15,18 +22,33 @@ namespace QuickstartIdentityServer
         {
             services.AddMvc();
 
-            // configure identity server with in-memory stores, keys, clients and scopes
-            services.AddDeveloperIdentityServer()
-                .AddInMemoryScopes(Config.GetScopes())
-                .AddInMemoryClients(Config.GetClients())
-                .AddInMemoryUsers(Config.GetUsers());
+            var connectionString = @"server=DESKTOP-82VF481\SQLEXPRESS;database=IdentityServer4;trusted_connection=yes";
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // configure identity server with in-memory users, but EF stores for clients and scopes
+            services.AddIdentityServer()
+                .AddTemporarySigningCredential()
+                .AddAspNetIdentity<IdentityUser>()
+                .AddConfigurationStore(builder =>
+                    builder.UseSqlServer(connectionString, options =>
+                        options.MigrationsAssembly(migrationsAssembly)))
+                .AddOperationalStore(builder =>
+                    builder.UseSqlServer(connectionString, options =>
+                        options.MigrationsAssembly(migrationsAssembly)));
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // this will do the initial DB population
+            InitializeDatabase(app);
             loggerFactory.AddConsole(LogLevel.Debug);
             app.UseDeveloperExceptionPage();
-
+            app.UseIdentity();
             app.UseIdentityServer();
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -49,6 +71,34 @@ namespace QuickstartIdentityServer
 
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+        }
+
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                context.Database.Migrate();
+                if (!context.Clients.Any())
+                {
+                    foreach (var client in Config.GetClients())
+                    {
+                        context.Clients.Add(client.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                if (!context.Scopes.Any())
+                {
+                    foreach (var scope in Config.GetScopes())
+                    {
+                        context.Scopes.Add(scope.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }

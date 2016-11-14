@@ -24,12 +24,12 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                 }
                 activate() {
                     this.apiUrl = "http://localhost/TodoAppApi/Todos/";
-                    this.fetchAllTodoItems();
                     this.setup();
+                    this.fetchAllTodoItems();
                 }
                 setup() {
                     var config = {
-                        authority: "http://localhost/IdentityServer",
+                        authority: "http://localhost/IdentityServer2",
                         client_id: "js",
                         redirect_uri: "http://localhost:61039/src/callback.html",
                         response_type: "id_token token",
@@ -60,9 +60,19 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                     });
                 }
                 fetchAllTodoItems() {
-                    return this.http.fetch(this.apiUrl).
-                        then(response => response.json()).then(data => {
-                        this.todoItems = data;
+                    var _this = this;
+                    this.mgr.getUser().then(function (user) {
+                        _this.http.configure(config => {
+                            config.withDefaults({
+                                headers: {
+                                    'Authorization': "Bearer " + user.access_token
+                                }
+                            });
+                        });
+                        return _this.http.fetch(_this.apiUrl).
+                            then(response => response.json()).then(data => {
+                            _this.todoItems = data;
+                        });
                     });
                 }
                 deleteTodoItem(todoItemId) {
@@ -71,7 +81,7 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                 log(message) {
                     this.message = '';
                 }
-                login1() {
+                login() {
                     this.mgr.signinRedirect();
                 }
                 api() {

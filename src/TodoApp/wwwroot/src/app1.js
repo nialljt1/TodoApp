@@ -15,13 +15,12 @@ function log() {
     });
 }
 
-debugger;
 document.getElementById("login").addEventListener("click", login, false);
 document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
 var config = {
-    authority: "http://localhost/IdentityServer",
+    authority: "http://localhost:5000",
     client_id: "js",
     redirect_uri: "http://localhost:61039/src/callback.html",
     response_type: "id_token token",

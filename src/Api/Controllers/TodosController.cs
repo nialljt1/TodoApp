@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Api.Controllers
 {
     [Route("[controller]")]
-    [AllowAnonymous]
+    [Authorize]
     public class TodosController : ControllerBase
     {
         public ITodosRepository Repo { get; set; }
