@@ -22,19 +22,19 @@ export class Todos {
         var config = {
             authority: "http://localhost/IdentityServer2",
             client_id: "js",
-            redirect_uri: "http://localhost:61039/src/callback.html",
+            redirect_uri: "http://localhost/TodoApp/src/callback.html",
             response_type: "id_token token",
             scope: "openid profile api1",
-            post_logout_redirect_uri: "http://localhost:61039/index.html",
+            post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
         };
         this.mgr = new Oidc.UserManager(config);
 
         this.mgr.getUser().then(function (user) {
             if (user) {
-                alert("User logged in" + user.profile);
+                ////alert("User logged in" + user.profile);
             }
             else {
-                alert("User not logged in");
+                ////alert("User not logged in");
             }
         });
     }

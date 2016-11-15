@@ -33,7 +33,7 @@ namespace Api
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost:61039")
+                    policy.WithOrigins("http://localhost/TodoApp")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -48,7 +48,7 @@ namespace Api
 
                 options.AddPolicy("default2", policy =>
                 {
-                    policy.WithOrigins("http://localhost:61039")
+                    policy.WithOrigins("http://localhost/TodoApp")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -69,7 +69,7 @@ namespace Api
 
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
-                Authority = "http://localhost/IdentityServer",
+                Authority = "http://localhost/IdentityServer2",
                 ScopeName = "api1",
 
                 RequireHttpsMetadata = false

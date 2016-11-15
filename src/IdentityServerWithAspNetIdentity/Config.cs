@@ -107,15 +107,15 @@ namespace QuickstartIdentityServer
 
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:61039/src/callback.html"
+                        "http://localhost/TodoApp/src/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost:61039/src/index1.html"
+                        "http://localhost/TodoApp/src/index1.html"
                     },
                     AllowedCorsOrigins = new List<string>
                     {
-                        "http://localhost:61039"
+                        "http://localhost/TodoApp"
                     },
 
                     AllowedScopes = new List<string>

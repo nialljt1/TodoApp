@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "/",
+    baseURL: "/TodoApp/",
   defaultJSExtensions: true,
   transpiler: "typescript",
   paths: {

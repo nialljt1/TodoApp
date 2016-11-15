@@ -75,10 +75,14 @@ namespace IdentityServerWithAspNetIdentity.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model)
         {
             var returnUrl = model.ReturnUrl;
+
+            if (returnUrl == null)
+            {
+                returnUrl = "http://localhost/TodoApp/";
+            }
 
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
@@ -235,6 +239,11 @@ namespace IdentityServerWithAspNetIdentity.Controllers
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
+                    if (returnUrl == null)
+                    {
+                        returnUrl = "http://localhost/TodoApp/";
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
@@ -560,14 +569,15 @@ namespace IdentityServerWithAspNetIdentity.Controllers
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+            return Redirect(returnUrl);
+            ////if (Url.IsLocalUrl(returnUrl))
+            ////{
+            ////    return Redirect(returnUrl);
+            ////}
+            ////else
+            ////{
+            ////    return RedirectToAction(nameof(HomeController.Index), "Home");
+            ////}
         }
 
         #endregion
