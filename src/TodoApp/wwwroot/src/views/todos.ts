@@ -14,8 +14,7 @@ export class Todos {
 
     activate() {
         this.apiUrl = "http://localhost/TodoAppApi/Todos/"
-        this.setup();
-        this.fetchAllTodoItems();        
+        this.setup();              
     }
 
     setup() {
@@ -28,13 +27,14 @@ export class Todos {
             post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
         };
         this.mgr = new Oidc.UserManager(config);
-
+        var mgr = this.mgr;
+        var _this = this;
         this.mgr.getUser().then(function (user) {
             if (user) {
-                ////alert("User logged in" + user.profile);
+                _this.fetchAllTodoItems();
             }
             else {
-                ////alert("User not logged in");
+                ////mgr.signinRedirect();
             }
         });
     }

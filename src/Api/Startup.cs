@@ -45,13 +45,6 @@ namespace Api
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
-
-                options.AddPolicy("default2", policy =>
-                {
-                    policy.WithOrigins("http://localhost/TodoApp")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
             });
 
             services.AddMvcCore()

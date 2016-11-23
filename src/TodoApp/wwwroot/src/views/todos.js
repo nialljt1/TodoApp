@@ -25,7 +25,6 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                 activate() {
                     this.apiUrl = "http://localhost/TodoAppApi/Todos/";
                     this.setup();
-                    this.fetchAllTodoItems();
                 }
                 setup() {
                     var config = {
@@ -37,8 +36,11 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                         post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
                     };
                     this.mgr = new Oidc.UserManager(config);
+                    var mgr = this.mgr;
+                    var _this = this;
                     this.mgr.getUser().then(function (user) {
                         if (user) {
+                            _this.fetchAllTodoItems();
                         }
                         else {
                         }

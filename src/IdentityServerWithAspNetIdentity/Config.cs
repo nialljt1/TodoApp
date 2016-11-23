@@ -72,7 +72,7 @@ namespace QuickstartIdentityServer
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
-                    RequireConsent = true,
+                    RequireConsent = false,
 
                     ClientSecrets = new List<Secret>
                     {
@@ -104,14 +104,15 @@ namespace QuickstartIdentityServer
                     ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-
+                    RequireConsent = false,
+                    
                     RedirectUris = new List<string>
                     {
                         "http://localhost/TodoApp/src/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
-                        "http://localhost/TodoApp/src/index1.html"
+                        "http://localhost/TodoApp/src/index.html"
                     },
                     AllowedCorsOrigins = new List<string>
                     {

@@ -53,6 +53,11 @@ namespace IdentityServerWithAspNetIdentity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
+            if (returnUrl == null)
+            {
+                return Redirect("http://localhost/TodoApp/");
+            }
+
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (context?.IdP != null)
             {
@@ -81,7 +86,7 @@ namespace IdentityServerWithAspNetIdentity.Controllers
 
             if (returnUrl == null)
             {
-                returnUrl = "http://localhost/TodoApp/";
+                return Redirect("http://localhost/TodoApp/");                
             }
 
             ViewData["ReturnUrl"] = returnUrl;
@@ -165,29 +170,9 @@ namespace IdentityServerWithAspNetIdentity.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Logout(string logoutId)
         {
-            var context = await _interaction.GetLogoutContextAsync(logoutId);
-            if (context?.IsAuthenticatedLogout == true)
-            {
-                // if the logout request is authenticated, it's safe to automatically sign-out
-                return await Logout(new LogoutViewModel { LogoutId = logoutId });
-            }
+            // if the logout request is authenticated, it's safe to automatically sign-out
+            var model = new LogoutViewModel { LogoutId = logoutId };
 
-            var vm = new LogoutViewModel
-            {
-                LogoutId = logoutId
-            };
-
-            return View(vm);
-        }
-
-        /// <summary>
-        /// Handle logout page postback
-        /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AllowAnonymous]
-        public async Task<IActionResult> Logout(LogoutViewModel model)
-        {
             // delete authentication cookie
             await _signInManager.SignOutAsync();
 
