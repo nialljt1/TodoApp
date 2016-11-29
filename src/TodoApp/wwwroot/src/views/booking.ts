@@ -2,7 +2,7 @@
 import { HttpClient, json } from "aurelia-fetch-client";
 
 @inject(HttpClient, json)
-export class Todos {
+export class Booking {
     todoItems: Array<ITodoItem>;
     dueDateTodoItem: Date;
     nameTodoItem: string;
@@ -14,30 +14,9 @@ export class Todos {
 
     activate() {
         this.apiUrl = "http://localhost/TodoAppApi/Todos/"
-        this.setup();              
+        ////this.setup();              
     }
 
-    setup() {
-        var config = {
-            authority: "http://localhost/IdentityServer2",
-            client_id: "js",
-            redirect_uri: "http://localhost/TodoApp/src/callback.html",
-            response_type: "id_token token",
-            scope: "openid profile api1",
-            post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
-        };
-        this.mgr = new Oidc.UserManager(config);
-        var mgr = this.mgr;
-        var _this = this;
-        this.mgr.getUser().then(function (user) {
-            if (user) {
-                _this.fetchAllTodoItems();
-            }
-            else {
-                ////mgr.signinRedirect();
-            }
-        });
-    }
 
     addNewTodoItem() {
         const newTodoItem = {

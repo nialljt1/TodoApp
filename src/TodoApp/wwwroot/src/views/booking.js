@@ -8,7 +8,7 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var aurelia_framework_1, aurelia_fetch_client_1;
-    var Todos;
+    var Booking;
     return {
         setters:[
             function (aurelia_framework_1_1) {
@@ -18,33 +18,13 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                 aurelia_fetch_client_1 = aurelia_fetch_client_1_1;
             }],
         execute: function() {
-            Todos = class Todos {
+            Booking = class Booking {
                 constructor(http) {
                     this.http = http;
                 }
                 activate() {
                     this.apiUrl = "http://localhost/TodoAppApi/Todos/";
-                    this.setup();
-                }
-                setup() {
-                    var config = {
-                        authority: "http://localhost/IdentityServer2",
-                        client_id: "js",
-                        redirect_uri: "http://localhost/TodoApp/src/callback.html",
-                        response_type: "id_token token",
-                        scope: "openid profile api1",
-                        post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
-                    };
-                    this.mgr = new Oidc.UserManager(config);
-                    var mgr = this.mgr;
-                    var _this = this;
-                    this.mgr.getUser().then(function (user) {
-                        if (user) {
-                            _this.fetchAllTodoItems();
-                        }
-                        else {
-                        }
-                    });
+                    ////this.setup();              
                 }
                 addNewTodoItem() {
                     const newTodoItem = {
@@ -105,11 +85,11 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                     this.http.fetch(this.apiUrl + todoItem.id, { method: "put" }).then(() => { this.fetchAllTodoItems(); });
                 }
             };
-            Todos = __decorate([
+            Booking = __decorate([
                 aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient, aurelia_fetch_client_1.json)
-            ], Todos);
-            exports_1("Todos", Todos);
+            ], Booking);
+            exports_1("Booking", Booking);
         }
     }
 });
-//# sourceMappingURL=todos.js.map
+//# sourceMappingURL=booking.js.map
