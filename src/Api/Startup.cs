@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api
 {
@@ -27,6 +28,8 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = @"data source=DESKTOP-82VF481\SQLEXPRESS;initial catalog=GroupBookings2;integrated security=True;MultipleActiveResultSets=True;";
+            services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
             services.AddSingleton<ITodosRepository, TodosRepository>();
             services.AddCors(options=>
             {

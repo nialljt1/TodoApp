@@ -1,21 +1,18 @@
-namespace Data.Models.Identity
+namespace Api.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class AspNetUserToken
     {
-        [Key]
         [Column(Order = 0)]
         [StringLength(450)]
         public string UserId { get; set; }
 
-        [Key]
         [Column(Order = 1)]
         [StringLength(450)]
         public string LoginProvider { get; set; }
 
-        [Key]
         [Column(Order = 2)]
         [StringLength(450)]
         public string Name { get; set; }

@@ -48,7 +48,7 @@ namespace Api.Controllers
                 return Created(url, todoItem);
 
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest();
             }

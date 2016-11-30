@@ -19,6 +19,7 @@ namespace Data.Models
 
         [Required, StringLength(50)]
         public string OrganiserTelephoneNumber { get; set; }
+
         public int NumberOfDiners { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-namespace Data.Models.Identity
+namespace Api.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
 
-    public partial class AspNetRoleClaim
+    public partial class AspNetUserClaim
     {
         public int Id { get; set; }
 
@@ -12,8 +12,8 @@ namespace Data.Models.Identity
 
         [Required]
         [StringLength(450)]
-        public string RoleId { get; set; }
+        public string UserId { get; set; }
 
-        public virtual AspNetRole AspNetRole { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

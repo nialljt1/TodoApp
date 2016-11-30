@@ -1,4 +1,4 @@
-namespace Data.Models.Identity
+namespace Api.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
 

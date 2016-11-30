@@ -1,4 +1,4 @@
-namespace Data.Models.Identity
+namespace Api.Models.Identity
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,6 @@ namespace Data.Models.Identity
         {
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            AspNetRoles = new HashSet<AspNetRole>();
         }
 
         [StringLength(450)]
@@ -54,8 +53,5 @@ namespace Data.Models.Identity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }

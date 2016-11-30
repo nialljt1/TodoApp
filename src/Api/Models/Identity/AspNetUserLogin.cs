@@ -1,16 +1,14 @@
-namespace Data.Models.Identity
+namespace Api.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class AspNetUserLogin
     {
-        [Key]
         [Column(Order = 0)]
         [StringLength(450)]
         public string LoginProvider { get; set; }
 
-        [Key]
         [Column(Order = 1)]
         [StringLength(450)]
         public string ProviderKey { get; set; }

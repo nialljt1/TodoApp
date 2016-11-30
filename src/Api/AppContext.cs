@@ -1,8 +1,8 @@
-﻿using Data.Models;
-using Data.Models.Identity;
+﻿using Api.Models;
+using Api.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data
+namespace Api
 {
     public class AppContext : DbContext
     {
@@ -16,6 +16,17 @@ namespace Data
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AspNetUserLogin>()
+                .HasKey(c => new { c.LoginProvider, c.ProviderKey });
+            modelBuilder.Entity<AspNetUserToken>()
+                .HasKey(c => new { c.UserId, c.LoginProvider, c.Name });
+            modelBuilder.Entity<AspNetUserRole>()
+                .HasKey(c => new { c.AspNetUserId, c.RoleId });
+        }
     }
 }
