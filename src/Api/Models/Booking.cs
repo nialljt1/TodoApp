@@ -21,7 +21,7 @@ namespace Api.Models
         public string OrganiserId { get; set; }
         public virtual AspNetUser Organiser { get; set; }
 
-        public DinerMenuItem StartingAt { get; set; }
+        public DateTime StartingAt { get; set; }
 
         [Required, StringLength(50)]
         public string OrganiserForename { get; set; }

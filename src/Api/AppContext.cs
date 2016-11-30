@@ -1,6 +1,7 @@
 ﻿using Api.Models;
 using Api.Models.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Api
 {
@@ -36,6 +37,16 @@ namespace Api
                 .HasKey(c => new { c.AspNetUserId, c.RoleId });
             modelBuilder.Entity<DinerMenuItem>()
                 .HasKey(c => new { c.DinerId, c.MenuItemId });
+            modelBuilder.Entity(typeof(Booking))
+            .HasOne(typeof(AspNetUser), "LastUpdatedBy")
+            .WithMany()
+            .HasForeignKey("LastUpdatedById")
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity(typeof(Booking))
+            .HasOne(typeof(AspNetUser), "CreatedBy")
+            .WithMany()
+            .HasForeignKey("CreatedById")
+            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

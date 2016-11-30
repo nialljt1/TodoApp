@@ -51,9 +51,7 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int?>("StartingAtDinerId");
-
-                    b.Property<int?>("StartingAtMenuItemId");
+                    b.Property<DateTime>("StartingAt");
 
                     b.HasKey("Id");
 
@@ -62,8 +60,6 @@ namespace Api.Migrations
                     b.HasIndex("LastUpdatedById");
 
                     b.HasIndex("OrganiserId");
-
-                    b.HasIndex("StartingAtDinerId", "StartingAtMenuItemId");
 
                     b.ToTable("Bookings");
                 });
@@ -279,19 +275,17 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserRole", b =>
                 {
-                    b.Property<int>("AspNetUserId");
+                    b.Property<string>("AspNetUserId")
+                        .HasMaxLength(450);
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .HasMaxLength(450);
 
-                    b.Property<int?>("RoleAspNetUserId");
+                    b.Property<string>("RoleAspNetUserId");
 
-                    b.Property<int?>("RoleId1");
-
-                    b.Property<string>("UserId");
+                    b.Property<string>("RoleId1");
 
                     b.HasKey("AspNetUserId", "RoleId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("RoleAspNetUserId", "RoleId1");
 
@@ -379,22 +373,16 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Models.Identity.AspNetUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CreatedById");
 
                     b.HasOne("Api.Models.Identity.AspNetUser", "LastUpdatedBy")
                         .WithMany()
-                        .HasForeignKey("LastUpdatedById")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LastUpdatedById");
 
                     b.HasOne("Api.Models.Identity.AspNetUser", "Organiser")
                         .WithMany()
                         .HasForeignKey("OrganiserId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Api.Models.DinerMenuItem", "StartingAt")
-                        .WithMany()
-                        .HasForeignKey("StartingAtDinerId", "StartingAtMenuItemId");
                 });
 
             modelBuilder.Entity("Api.Models.Diner", b =>
@@ -458,7 +446,8 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Models.Identity.AspNetUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("AspNetUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Api.Models.Identity.AspNetUserRole", "Role")
                         .WithMany()
