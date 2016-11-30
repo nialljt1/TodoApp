@@ -11,6 +11,13 @@ namespace Api
         { }
 
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Diner> Diner { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuSection> MenuSections { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<DinerMenuItem> DinerMenuItems { get; set; }
+        public DbSet<Email> Emails { get; set; }
+
         public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -27,6 +34,8 @@ namespace Api
                 .HasKey(c => new { c.UserId, c.LoginProvider, c.Name });
             modelBuilder.Entity<AspNetUserRole>()
                 .HasKey(c => new { c.AspNetUserId, c.RoleId });
+            modelBuilder.Entity<DinerMenuItem>()
+                .HasKey(c => new { c.DinerId, c.MenuItemId });
         }
     }
 }

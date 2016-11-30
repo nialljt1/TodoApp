@@ -28,7 +28,7 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"data source=DESKTOP-82VF481\SQLEXPRESS;initial catalog=GroupBookings2;integrated security=True;MultipleActiveResultSets=True;";
+            var connection = @"data source=DESKTOP-82VF481\SQLEXPRESS;initial catalog=GroupBookings;integrated security=True;MultipleActiveResultSets=True;";
             services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
             services.AddSingleton<ITodosRepository, TodosRepository>();
             services.AddCors(options=>

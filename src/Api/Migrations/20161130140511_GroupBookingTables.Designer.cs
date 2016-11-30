@@ -8,9 +8,10 @@ using Api;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20161130140511_GroupBookingTables")]
+    partial class GroupBookingTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -279,19 +280,15 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserRole", b =>
                 {
-                    b.Property<int>("AspNetUserId");
+                    b.Property<string>("AspNetUserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId");
 
-                    b.Property<int?>("RoleAspNetUserId");
+                    b.Property<string>("RoleAspNetUserId");
 
-                    b.Property<int?>("RoleId1");
-
-                    b.Property<string>("UserId");
+                    b.Property<string>("RoleId1");
 
                     b.HasKey("AspNetUserId", "RoleId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("RoleAspNetUserId", "RoleId1");
 
@@ -458,7 +455,8 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Models.Identity.AspNetUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("AspNetUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Api.Models.Identity.AspNetUserRole", "Role")
                         .WithMany()

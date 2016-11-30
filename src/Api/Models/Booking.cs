@@ -1,10 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Api.Models.Identity;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models
 {
     public class Booking
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Booking()
+        {
+            Diners = new HashSet<Diner>();
+            CreatedAt = DateTimeOffset.Now;
+
+        }
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(450)]
+        public string OrganiserId { get; set; }
+        public virtual AspNetUser Organiser { get; set; }
+
+        public DinerMenuItem StartingAt { get; set; }
 
         [Required, StringLength(50)]
         public string OrganiserForename { get; set; }
@@ -14,6 +31,25 @@ namespace Api.Models
 
         [Required, StringLength(50)]
         public string OrganiserTelephoneNumber { get; set; }
+
+        [Required]
         public int NumberOfDiners { get; set; }
+        [Required]
+        public DateTimeOffset CreatedAt { get; set; }
+
+        [Required]
+        [StringLength(450)]
+        public string CreatedById { get; set; }
+        public virtual AspNetUser CreatedBy { get; set; }
+
+        [Required]
+        [StringLength(450)]
+        public string LastUpdatedById { get; set; }
+        public virtual AspNetUser LastUpdatedBy { get; set; }
+        [Required]
+        public DateTimeOffset LastUpdatedAt { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Diner> Diners { get; set; }
     }
 }
