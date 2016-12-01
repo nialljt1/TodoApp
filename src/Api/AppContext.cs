@@ -34,7 +34,7 @@ namespace Api
             modelBuilder.Entity<AspNetUserToken>()
                 .HasKey(c => new { c.UserId, c.LoginProvider, c.Name });
             modelBuilder.Entity<AspNetUserRole>()
-                .HasKey(c => new { c.AspNetUserId, c.RoleId });
+                .HasKey(c => new { c.UserId, c.RoleId });
             modelBuilder.Entity<DinerMenuItem>()
                 .HasKey(c => new { c.DinerId, c.MenuItemId });
             modelBuilder.Entity(typeof(Booking))

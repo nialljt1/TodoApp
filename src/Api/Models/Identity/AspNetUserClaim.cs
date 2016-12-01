@@ -1,6 +1,7 @@
 namespace Api.Models.Identity
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class AspNetUserClaim
     {
@@ -14,6 +15,7 @@ namespace Api.Models.Identity
         [StringLength(450)]
         public string UserId { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual AspNetUser AspNetUser { get; set; }
     }
 }

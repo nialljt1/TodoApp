@@ -76,7 +76,6 @@ namespace Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AspNetRoleId = table.Column<string>(nullable: true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(maxLength: 450, nullable: false)
@@ -85,11 +84,11 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_AspNetRoleId",
-                        column: x => x.AspNetRoleId,
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,7 +190,6 @@ namespace Api.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AspNetUserId = table.Column<string>(nullable: true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(maxLength: 450, nullable: false)
@@ -200,11 +198,11 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_AspNetUserId",
-                        column: x => x.AspNetUserId,
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,7 +211,6 @@ namespace Api.Migrations
                 {
                     LoginProvider = table.Column<string>(maxLength: 450, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 450, nullable: false),
-                    AspNetUserId = table.Column<string>(nullable: true),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(maxLength: 450, nullable: false)
                 },
@@ -221,36 +218,36 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_AspNetUserId",
-                        column: x => x.AspNetUserId,
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    AspNetUserId = table.Column<string>(maxLength: 450, nullable: false),
+                    UserId = table.Column<string>(maxLength: 450, nullable: false),
                     RoleId = table.Column<string>(maxLength: 450, nullable: false),
-                    RoleAspNetUserId = table.Column<string>(nullable: true),
-                    RoleId1 = table.Column<string>(nullable: true)
+                    RoleId1 = table.Column<string>(nullable: true),
+                    RoleUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.AspNetUserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_AspNetUserId",
-                        column: x => x.AspNetUserId,
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUserRoles_RoleAspNetUserId_RoleId1",
-                        columns: x => new { x.RoleAspNetUserId, x.RoleId1 },
+                        name: "FK_AspNetUserRoles_AspNetUserRoles_RoleUserId_RoleId1",
+                        columns: x => new { x.RoleUserId, x.RoleId1 },
                         principalTable: "AspNetUserRoles",
-                        principalColumns: new[] { "AspNetUserId", "RoleId" },
+                        principalColumns: new[] { "UserId", "RoleId" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -374,9 +371,9 @@ namespace Api.Migrations
                 column: "MenuItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_AspNetRoleId",
+                name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
-                column: "AspNetRoleId");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_AspNetRoleId",
@@ -384,19 +381,19 @@ namespace Api.Migrations
                 column: "AspNetRoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_AspNetUserId",
+                name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
-                column: "AspNetUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_AspNetUserId",
+                name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
-                column: "AspNetUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleAspNetUserId_RoleId1",
+                name: "IX_AspNetUserRoles_RoleUserId_RoleId1",
                 table: "AspNetUserRoles",
-                columns: new[] { "RoleAspNetUserId", "RoleId1" });
+                columns: new[] { "RoleUserId", "RoleId1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_MenuSectionId",

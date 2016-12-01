@@ -8,8 +8,8 @@ using Api;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20161130205359_Initial")]
-    partial class Initial
+    [Migration("20161201102634_AspnetUserRole")]
+    partial class AspnetUserRole
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,8 +165,6 @@ namespace Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AspNetRoleId");
-
                     b.Property<string>("ClaimType");
 
                     b.Property<string>("ClaimValue");
@@ -177,7 +175,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AspNetRoleId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
                 });
@@ -234,8 +232,6 @@ namespace Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AspNetUserId");
-
                     b.Property<string>("ClaimType");
 
                     b.Property<string>("ClaimValue");
@@ -246,7 +242,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AspNetUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
                 });
@@ -259,8 +255,6 @@ namespace Api.Migrations
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(450);
 
-                    b.Property<string>("AspNetUserId");
-
                     b.Property<string>("ProviderDisplayName");
 
                     b.Property<string>("UserId")
@@ -269,26 +263,22 @@ namespace Api.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("AspNetUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserRole", b =>
                 {
-                    b.Property<string>("AspNetUserId")
+                    b.Property<string>("UserId")
                         .HasMaxLength(450);
 
                     b.Property<string>("RoleId")
                         .HasMaxLength(450);
 
-                    b.Property<string>("RoleAspNetUserId");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.Property<string>("RoleId1");
-
-                    b.HasKey("AspNetUserId", "RoleId");
-
-                    b.HasIndex("RoleAspNetUserId", "RoleId1");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -419,7 +409,8 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Models.Identity.AspNetRole", "AspNetRole")
                         .WithMany("AspNetRoleClaims")
-                        .HasForeignKey("AspNetRoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUser", b =>
@@ -433,26 +424,29 @@ namespace Api.Migrations
                 {
                     b.HasOne("Api.Models.Identity.AspNetUser", "AspNetUser")
                         .WithMany("AspNetUserClaims")
-                        .HasForeignKey("AspNetUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserLogin", b =>
                 {
                     b.HasOne("Api.Models.Identity.AspNetUser", "AspNetUser")
                         .WithMany("AspNetUserLogins")
-                        .HasForeignKey("AspNetUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserRole", b =>
                 {
-                    b.HasOne("Api.Models.Identity.AspNetUser", "User")
+                    b.HasOne("Api.Models.Identity.AspNetRole", "Role")
                         .WithMany()
-                        .HasForeignKey("AspNetUserId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Api.Models.Identity.AspNetUserRole", "Role")
+                    b.HasOne("Api.Models.Identity.AspNetUser", "User")
                         .WithMany()
-                        .HasForeignKey("RoleAspNetUserId", "RoleId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Api.Models.MenuItem", b =>

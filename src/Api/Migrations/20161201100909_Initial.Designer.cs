@@ -8,9 +8,10 @@ using Api;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20161201100909_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -275,9 +276,13 @@ namespace Api.Migrations
                     b.Property<string>("RoleId")
                         .HasMaxLength(450);
 
+                    b.Property<string>("RoleId1");
+
+                    b.Property<string>("RoleUserId");
+
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleUserId", "RoleId1");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -437,15 +442,14 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.Identity.AspNetUserRole", b =>
                 {
-                    b.HasOne("Api.Models.Identity.AspNetRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Api.Models.Identity.AspNetUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Api.Models.Identity.AspNetUserRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleUserId", "RoleId1");
                 });
 
             modelBuilder.Entity("Api.Models.MenuItem", b =>

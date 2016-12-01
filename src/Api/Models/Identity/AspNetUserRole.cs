@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Api.Models.Identity
 {
@@ -6,10 +7,14 @@ namespace Api.Models.Identity
     {
         [StringLength(450)]
         public string RoleId { get; set; }
-        public AspNetUserRole Role { get; set; }
+
+        [ForeignKey("RoleId")]
+        public AspNetRole Role { get; set; }
 
         [StringLength(450)]
-        public string AspNetUserId { get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
         public AspNetUser User { get; set; }
     }
 }
