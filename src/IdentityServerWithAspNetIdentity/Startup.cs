@@ -14,6 +14,7 @@ using IdentityServerWithAspNetIdentity.Services;
 using QuickstartIdentityServer;
 using IdentityServer4.Services;
 using IdentityModel;
+using IdentityServerWithAspNetIdentity.Data;
 
 namespace IdentityServerWithAspNetIdentity
 {
@@ -42,12 +43,12 @@ namespace IdentityServerWithAspNetIdentity
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            ////services.AddDbContext<ApplicationDbContext>(options =>
-            ////    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            ////services.AddIdentity<ApplicationUser, IdentityRole>()
-            ////    .AddEntityFrameworkStores<ApplicationDbContext>()
-            ////    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
 
