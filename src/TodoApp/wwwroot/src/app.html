@@ -18,7 +18,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li show.bind="!isLoggedIn">
-                        <a href="#/welcome">Welcome1</a>
+                        <a href="#/welcome">Welcome</a>
+                    </li>
+                    <li>
+                        <a href="#/bookings">Bookings</a>
                     </li>
                     <li>
                         <a href="#/booking">Booking</a>
@@ -29,6 +32,9 @@
                     <li>
                         <a href="#/about">About</a>
                     </li>
+                    <li>
+                        <a href="#/bootstrapForm">Bootstrap Form</a>
+                    </li>                    
                     <li show.bind="isLoggedIn">
                         <a href="#/logout" click.delegate="logout()">Log out</a>
                     </li>

@@ -54,7 +54,10 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
                         { route: ["", "welcome"], moduleId: "./views/welcome", nav: true, title: "Welcome" },
                         { route: ["help"], moduleId: "./views/help", nav: true, title: "Help" },
                         { route: ["about"], moduleId: "./views/about", nav: true, title: "About" },
-                        { route: ["logout"], moduleId: "./views/logout", nav: true, title: "Log out" }
+                        { route: ["logout"], moduleId: "./views/logout", nav: true, title: "Log out" },
+                        { route: ["addBooking"], moduleId: "./views/addBooking", nav: true, title: "Add booking" },
+                        { route: ["bootstrapForm"], moduleId: "./views/bootstrapForm", nav: true, title: "Bootstrap Form" },
+                        { route: ["bookings"], moduleId: "./views/bookings", nav: true, title: "Bookings" },
                     ]);
                 }
                 logout() {
