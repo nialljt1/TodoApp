@@ -6,6 +6,7 @@ export class App {
     router: Router;
     mgr: Oidc.UserManager;
     isLoggedIn: boolean;
+    dateValue = null;
 
     constructor() { }
 

@@ -20,6 +20,7 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
         execute: function() {
             App = class App {
                 constructor() {
+                    this.dateValue = null;
                 }
                 activate() {
                     this.setup();

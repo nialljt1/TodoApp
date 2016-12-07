@@ -22,6 +22,49 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                 constructor(http) {
                     this.http = http;
                 }
+                activate() {
+                    this.apiUrl = "http://localhost/TodoAppApi/Bookings/";
+                    this.setup();
+                }
+                setup() {
+                    var config = {
+                        authority: "http://localhost/IdentityServer2",
+                        client_id: "js",
+                        redirect_uri: "http://localhost/TodoApp/src/callback.html",
+                        response_type: "id_token token",
+                        scope: "openid profile api1",
+                        post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
+                    };
+                    this.mgr = new Oidc.UserManager(config);
+                    var mgr = this.mgr;
+                    var _this = this;
+                    this.mgr.getUser().then(function (user) {
+                        if (user) {
+                        }
+                        else {
+                        }
+                    });
+                }
+                addNewTodoItem() {
+                    var _this = this;
+                    this.mgr.getUser().then(function (user) {
+                        const newBooking = {
+                            firstName: this.firstName,
+                            surname: this.surname,
+                            emailAddress: this.emailAddress,
+                            telephoneNumber: this.telephoneNumber,
+                            bookingDate: this.bookingDate,
+                            bookingTime: this.bookingTime
+                        };
+                        this.http.fetch(this.apiUrl, {
+                            method: "post",
+                            body: aurelia_fetch_client_1.json(newBooking)
+                        }).then(response => {
+                            ////this.fetchAllTodoItems();
+                            console.log("todo item added: ", response);
+                        });
+                    });
+                }
             };
             AddBooking = __decorate([
                 aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient, aurelia_fetch_client_1.json)

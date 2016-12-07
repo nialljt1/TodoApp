@@ -14561,7 +14561,7 @@ var Oidc =
 	            this._session_state = session_state;
 	
 	            this._timer = window.setInterval(function () {
-	                _this._frame.contentWindow.postMessage(_this._client_id + " " + _this._session_state, _this._frame_origin);
+	                //_this._frame.contentWindow.postMessage(_this._client_id + " " + _this._session_state, _this._frame_origin);
 	            }, this._interval);
 	        }
 	    };

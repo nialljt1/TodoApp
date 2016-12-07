@@ -1,5 +1,6 @@
 ﻿<template>
     <require from="../../src/components/date-format"></require>
+    <require from="./datepicker"></require>
 
     due date from datepicker3 : ${dueDateTodoItem}
     <pre id="results"></pre>
@@ -30,7 +31,9 @@
                 <input type="text" value.bind="nameTodoItem" class="form-control" placeholder="Name new todo item ...">
             </div>
             <div class="form-group">
-                <input datepicker value.bind="dueDateTodoItem" class="form-control" placeholder="Enter due date (MM/DD/YYYY)">
+                Pick a date:
+                <input datepicker value.bind="dateValue">
+
             </div>
             <button type="submit" click.delegate="addNewTodoItem()" class="btn btn-default">Add New Todo Item</button>
         </form>
