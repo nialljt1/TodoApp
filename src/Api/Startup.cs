@@ -31,23 +31,28 @@ namespace Api
             var connection = @"data source=DESKTOP-82VF481\SQLEXPRESS;initial catalog=GroupBookings;integrated security=True;MultipleActiveResultSets=True;";
             services.AddDbContext<AppContext>(options => options.UseSqlServer(connection));
             services.AddSingleton<ITodosRepository, TodosRepository>();
+            services.AddSingleton<IBookingsRepository, BookingsRepository>();
             services.AddCors(options=>
             {
                 // this defines a CORS policy called "default"
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("http://localhost/TodoApp")
+                    policy.WithOrigins("http://localhost")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
+
+                   //// policy.WithOrigins("http://localhost:5001")
+                   ////.AllowAnyHeader()
+                   ////.AllowAnyMethod();
                 });
 
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default1", policy =>
-                {
-                    policy.WithOrigins("http://localhost:5001")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
+                ////// this defines a CORS policy called "default"
+                ////options.AddPolicy("default1", policy =>
+                ////{
+                ////    policy.WithOrigins("http://localhost:5001")
+                ////        .AllowAnyHeader()
+                ////        .AllowAnyMethod();
+                ////});
             });
 
             services.AddMvcCore()

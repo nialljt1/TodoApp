@@ -18,8 +18,6 @@ namespace Api.Models
 
         [Required]
         [StringLength(450)]
-        public string OrganiserId { get; set; }
-        public virtual AspNetUser Organiser { get; set; }
 
         public DateTime StartingAt { get; set; }
 
@@ -29,6 +27,8 @@ namespace Api.Models
         [Required, StringLength(50)]
         public string OrganiserSurname { get; set; }
 
+        [Required, StringLength(100)]
+        public string OrganiserEmailAddress { get; set; }
         [Required, StringLength(50)]
         public string OrganiserTelephoneNumber { get; set; }
 

@@ -21,8 +21,13 @@ namespace Api.Data
             booking.OrganiserForename = clientBooking.FirstName;
             booking.OrganiserSurname = clientBooking.Surname;
             booking.OrganiserTelephoneNumber = clientBooking.TelephoneNumber;
-            booking.OrganiserTelephoneNumber = clientBooking.TelephoneNumber;
-            booking.StartingAt = DateTime.Now;
+            booking.OrganiserEmailAddress = clientBooking.EmailAddress;
+            booking.StartingAt = clientBooking.StartingAt;
+            booking.NumberOfDiners = clientBooking.NumberOfDiners;
+            booking.CreatedById = "0d20e665-2859-418e-ae12-bece795627df";
+            booking.LastUpdatedById = "0d20e665-2859-418e-ae12-bece795627df";
+            booking.LastUpdatedAt = DateTimeOffset.Now;
+            booking.CreatedAt = DateTimeOffset.Now;
             _appContext.Bookings.Add(booking);
             _appContext.SaveChanges();
             return booking.Id;

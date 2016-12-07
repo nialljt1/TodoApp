@@ -7,6 +7,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using Api.ClientModels;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -29,12 +30,12 @@ namespace Api.Controllers
             try
             {
                 var bookingId = Repo.AddBooking(booking);
-                var url = Url.RouteUrl("GetTodoItemByIdRoute", new { id = bookingId }, Request.Scheme,
+                var url = Url.RouteUrl("GetBookingByIdRoute", new { id = bookingId }, Request.Scheme,
                     Request.Host.ToUriComponent());
                 return Created(url, booking);
 
             }
-            catch
+            catch (Exception ex)
             {
                 return BadRequest();
             }

@@ -11,7 +11,7 @@ namespace Api.ClientModels
         public string Surname { get; set; }
         public string EmailAddress { get; set; }
         public string TelephoneNumber { get; set; }
-        public string BookingDate { get; set; }
-        public string BookingTime { get; set; }
+        public DateTime StartingAt { get; set; }
+        public int NumberOfDiners { get; set; }
     }
 }

@@ -23,7 +23,8 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                     this.http = http;
                 }
                 activate() {
-                    this.apiUrl = "http://localhost/TodoAppApi/Bookings/";
+                    ////this.apiUrl = "http://localhost:5001/TodoAppApi/Bookings/"
+                    this.apiUrl = "http://localhost:5001/Bookings/";
                     this.setup();
                 }
                 setup() {
@@ -36,32 +37,35 @@ System.register(["aurelia-framework", "aurelia-fetch-client"], function(exports_
                         post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
                     };
                     this.mgr = new Oidc.UserManager(config);
-                    var mgr = this.mgr;
-                    var _this = this;
-                    this.mgr.getUser().then(function (user) {
-                        if (user) {
-                        }
-                        else {
-                        }
-                    });
                 }
-                addNewTodoItem() {
+                addBooking() {
                     var _this = this;
                     this.mgr.getUser().then(function (user) {
-                        const newBooking = {
-                            firstName: this.firstName,
-                            surname: this.surname,
-                            emailAddress: this.emailAddress,
-                            telephoneNumber: this.telephoneNumber,
-                            bookingDate: this.bookingDate,
-                            bookingTime: this.bookingTime
+                        var newBooking = {
+                            firstName: _this.firstName,
+                            surname: _this.surname,
+                            emailAddress: _this.emailAddress,
+                            telephoneNumber: _this.telephoneNumber,
+                            startingAt: new Date(_this.bookingDate + " " + _this.bookingTime),
+                            numberOfDiners: _this.numberOfDiners
                         };
-                        this.http.fetch(this.apiUrl, {
+                        if (user) {
+                            _this.http.configure(config => {
+                                config
+                                    .withDefaults({
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'X-Requested-With': 'Fetch',
+                                        'Authorization': "Bearer " + user.access_token
+                                    }
+                                });
+                            });
+                        }
+                        _this.http.fetch(_this.apiUrl, {
                             method: "post",
                             body: aurelia_fetch_client_1.json(newBooking)
                         }).then(response => {
-                            ////this.fetchAllTodoItems();
-                            console.log("todo item added: ", response);
+                            console.log("booking added: ", response);
                         });
                     });
                 }
