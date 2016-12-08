@@ -13,5 +13,6 @@ namespace Api.ClientModels
         public string TelephoneNumber { get; set; }
         public DateTime StartingAt { get; set; }
         public int NumberOfDiners { get; set; }
+        public string Menu { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace Api.Models
         }
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(450)]
+        public int? MenuId { get; set; }
+        public virtual Menu Menu { get; set; }
 
         public DateTime StartingAt { get; set; }
 

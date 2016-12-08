@@ -12,7 +12,7 @@ using System.Linq;
 namespace Api.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    ////[Authorize]
     public class BookingsController : ControllerBase
     {
         public IBookingsRepository Repo { get; set; }
@@ -47,6 +47,14 @@ namespace Api.Controllers
         public Booking Get(int id)
         {
             return Repo.GetBookingById(id);
+        }
+
+        // GET GetBookings/1
+        [HttpGet("{restaurantId}")]
+        [Route("GetBookings/{restaurantId}", Name = "GetBookings")]
+        public IEnumerable<ClientBooking> GetBookings(int restaurantId)
+        {
+            return Repo.GetBookings(restaurantId);
         }
     }
 }

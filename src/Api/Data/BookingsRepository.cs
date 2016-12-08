@@ -33,6 +33,23 @@ namespace Api.Data
             return booking.Id;
         }
 
+        public IList<ClientBooking> GetBookings(int restaurantId)
+        {
+            return _appContext.Bookings
+                .Where(b => b.Menu.RestaurantId == restaurantId)
+                .Select(b => new ClientBooking
+                {
+                    FirstName = b.OrganiserForename,
+                    Surname = b.OrganiserSurname,
+                    TelephoneNumber = b.OrganiserTelephoneNumber,
+                    EmailAddress = b.OrganiserEmailAddress,
+                    StartingAt = b.StartingAt,
+                    NumberOfDiners = b.NumberOfDiners,
+                    Menu = b.Menu.Name
+                })
+                .ToList();
+        }
+
         public Booking GetBookingById(int id)
         {
             return _appContext.Bookings.Find(id);
