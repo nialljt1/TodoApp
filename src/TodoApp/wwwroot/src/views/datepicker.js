@@ -8,8 +8,16 @@ export class DatePicker {
     }
   
     attached() {
-        $(this.element).datepicker()
-          .on('change', e => fireEvent(e.target, 'input'));
+        var _this = this;
+        $(this.element).datepicker({
+            dateFormat: 'dd/mm/yy',   
+            onSelect: function(dateText, _this) {
+                debugger;
+                ////Bookings.fetchBookings();
+                 $(this).change();
+            }        
+        })
+            .on('change', e => fireEvent(e.target, 'input'));
     
     }
   

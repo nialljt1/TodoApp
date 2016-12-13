@@ -7,6 +7,7 @@ namespace Api.ClientModels
 {
     public class ClientBooking
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string EmailAddress { get; set; }
@@ -14,5 +15,12 @@ namespace Api.ClientModels
         public DateTime StartingAt { get; set; }
         public int NumberOfDiners { get; set; }
         public string Menu { get; set; }
+    }
+
+    public class FilterCriteria
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public bool isCancelled { get; set; }
     }
 }

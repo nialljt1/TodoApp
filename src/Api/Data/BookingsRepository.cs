@@ -33,12 +33,35 @@ namespace Api.Data
             return booking.Id;
         }
 
-        public IList<ClientBooking> GetBookings(int restaurantId)
+        public IList<ClientBooking> FilterBookings(int restaurantId, FilterCriteria filterCriteria)
         {
-            return _appContext.Bookings
-                .Where(b => b.Menu.RestaurantId == restaurantId)
+            var bookings = _appContext.Bookings
+                .Where(b => b.Menu.RestaurantId == restaurantId);
+
+            if (filterCriteria.FromDate != null)
+            {
+                DateTime fromDateAsDate;
+                if (DateTime.TryParse(filterCriteria.FromDate, out fromDateAsDate))
+                {
+                    bookings = bookings.Where(b => b.StartingAt <= fromDateAsDate);
+                }                
+            }
+
+            if (filterCriteria.ToDate != null)
+            {
+                DateTime toDateAsDate;
+                if (DateTime.TryParse(filterCriteria.ToDate, out toDateAsDate))
+                {
+                    bookings = bookings.Where(b => b.StartingAt <= toDateAsDate.AddDays(1));
+                }
+            }
+
+            bookings = bookings.Where(b => b.IsCancelled == filterCriteria.isCancelled); 
+
+            return bookings
                 .Select(b => new ClientBooking
                 {
+                    Id  = b.Id,
                     FirstName = b.OrganiserForename,
                     Surname = b.OrganiserSurname,
                     TelephoneNumber = b.OrganiserTelephoneNumber,
@@ -47,6 +70,7 @@ namespace Api.Data
                     NumberOfDiners = b.NumberOfDiners,
                     Menu = b.Menu.Name
                 })
+                .OrderByDescending(b => b.StartingAt)
                 .ToList();
         }
 

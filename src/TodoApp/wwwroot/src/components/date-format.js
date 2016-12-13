@@ -11,7 +11,7 @@ System.register(["moment"], function(exports_1, context_1) {
         execute: function() {
             DateFormatValueConverter = class DateFormatValueConverter {
                 toView(value) {
-                    return moment_1.default(value).format("M/D/YYYY");
+                    return moment_1.default(value).format("DD/MM/YYYY hh:mm");
                 }
             };
             exports_1("DateFormatValueConverter", DateFormatValueConverter);

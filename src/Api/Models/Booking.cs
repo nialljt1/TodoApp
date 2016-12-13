@@ -16,7 +16,7 @@ namespace Api.Models
         }
         public int Id { get; set; }
 
-        public int? MenuId { get; set; }
+        public int MenuId { get; set; }
         public virtual Menu Menu { get; set; }
 
         public DateTime StartingAt { get; set; }
@@ -32,10 +32,11 @@ namespace Api.Models
         [Required, StringLength(50)]
         public string OrganiserTelephoneNumber { get; set; }
 
-        [Required]
         public int NumberOfDiners { get; set; }
         [Required]
         public DateTimeOffset CreatedAt { get; set; }
+
+        public bool IsCancelled { get; set; }
 
         [Required]
         [StringLength(450)]

@@ -44,6 +44,11 @@ namespace Api
             .HasForeignKey("LastUpdatedById")
             .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity(typeof(Booking))
+            .HasOne(typeof(Menu), "Menu")
+            .WithMany()
+            .HasForeignKey("MenuId")
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity(typeof(Booking))
             .HasOne(typeof(AspNetUser), "CreatedBy")
             .WithMany()
             .HasForeignKey("CreatedById")

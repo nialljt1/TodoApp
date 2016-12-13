@@ -50,11 +50,11 @@ namespace Api.Controllers
         }
 
         // GET GetBookings/1
-        [HttpGet("{restaurantId}")]
-        [Route("GetBookings/{restaurantId}", Name = "GetBookings")]
-        public IEnumerable<ClientBooking> GetBookings(int restaurantId)
+        [HttpPost]
+        [Route("FilterBookings/{restaurantId}", Name = "FilterBookings")]
+        public IEnumerable<ClientBooking> FilterBookings(int restaurantId, [FromBody] FilterCriteria filterCriteria)
         {
-            return Repo.GetBookings(restaurantId);
+            return Repo.FilterBookings(restaurantId, filterCriteria);
         }
     }
 }

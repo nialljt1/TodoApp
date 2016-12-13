@@ -2,6 +2,6 @@
 
 export class DateFormatValueConverter {
     toView(value) {
-        return moment(value).format("M/D/YYYY");
+        return moment(value).format("DD/MM/YYYY hh:mm");
     }
 }

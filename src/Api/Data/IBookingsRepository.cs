@@ -8,6 +8,6 @@ namespace Api.Data
     {
         int AddBooking(ClientBooking booking);
         Booking GetBookingById(int id);
-        IList<ClientBooking> GetBookings(int restaurantId);
+        IList<ClientBooking> FilterBookings(int restaurantId, FilterCriteria filterCriteria);
     }
 }
