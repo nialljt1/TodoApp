@@ -1,11 +1,15 @@
-﻿import { inject } from "aurelia-framework";
+﻿import { inject, TaskQueue } from "aurelia-framework";
+import { bindingMode } from "aurelia-binding";
 import { HttpClient, json } from "aurelia-fetch-client";
 
-@inject(HttpClient, json)
+@inject(TaskQueue, HttpClient, json)
 export class Bookings {
-    constructor(private http: HttpClient) { }
+    constructor(taskQueue: TaskQueue, private http: HttpClient) {
+        this.taskQueue = taskQueue;
+    }
 
-    bookings = [];
+    taskQueue: TaskQueue;
+    bookings: Array<IBooking>;
     pageSize = 10;
     apiUrl: string;
     mgr: Oidc.UserManager;
@@ -31,12 +35,12 @@ export class Bookings {
         var _this = this;
         this.mgr.getUser().then(function (user) {
             if (user) {
-                _this.fetchAllTodoItems();
+                _this.fetchBookings();
             }
         });
     }
 
-    fetchAllTodoItems() {
+    fetchBookings() {
         var _this = this;
         this.mgr.getUser().then(function (user) {
 
@@ -50,40 +54,29 @@ export class Bookings {
 
             return _this.http.fetch(_this.apiUrl).
                 then(response => response.json()).then(data => {
+                    $('#example2').hide();
                     _this.bookings = data;
-                    debugger;
+                    // TODO: Resolve timing issue in table
+                    setTimeout(function () {
+                        $('#example2').DataTable();
+                        $('#example2').show();
+                    }, 500);
                 });
         });
     }
 
-    fetchBookings() {
-        debugger;
-        var _this = this;
-        this.mgr.getUser().then(function (user) {
-            debugger;
-                if (user) {
-                    _this.http.configure(config => {
-                        config
-                            .withDefaults({
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'X-Requested-With': 'Fetch',
-                                    'Authorization': "Bearer " + user.access_token
-                                }
-                            })
-
-                    });
-            }
-
-                _this.http.fetch(_this.apiUrl, {
-                    method: "GET"
-                })
-                    .then(response => {
-                        console.log("booking added: ", response);
-                        debugger;                        
-                    });
-                    ////.then(response => response.json())
-                    ////.then(bookings => _this.bookings = bookings);
-        });
+    deleteBooking(bookingId) {
+        this.http.fetch(this.apiUrl + bookingId,
+            { method: "delete" }).then(() => { this.fetchBookings(); });
     }
+}
+
+export interface IBooking {
+    id: number;
+    firstName: string;
+    surname: boolean;
+    emailAddress: string;
+    numberOfGuests: number;
+    startedAt: string;
+    isSelected: boolean;
 }
