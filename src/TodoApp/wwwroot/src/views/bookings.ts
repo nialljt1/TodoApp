@@ -32,7 +32,6 @@ export class Bookings {
         this.bookingFromDate = null;
         this.bookingToDate = "13/12/2016";
         this.isCancelled = false;
-
         this.baseViewModel.mgr.getUser().then(function (user) {
             if (user) {
                 _this.fetchBookings();

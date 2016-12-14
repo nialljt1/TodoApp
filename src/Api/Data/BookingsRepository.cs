@@ -33,6 +33,22 @@ namespace Api.Data
             return booking.Id;
         }
 
+        public void UpdateBooking(ClientBooking clientBooking)
+        {
+            var booking = _appContext.Bookings.Find(clientBooking.Id);
+            booking.OrganiserForename = clientBooking.FirstName;
+            booking.OrganiserSurname = clientBooking.Surname;
+            booking.OrganiserTelephoneNumber = clientBooking.TelephoneNumber;
+            booking.OrganiserEmailAddress = clientBooking.EmailAddress;
+            booking.StartingAt = clientBooking.StartingAt;
+            booking.NumberOfDiners = clientBooking.NumberOfDiners;
+            booking.CreatedById = "0d20e665-2859-418e-ae12-bece795627df";
+            booking.LastUpdatedById = "0d20e665-2859-418e-ae12-bece795627df";
+            booking.LastUpdatedAt = DateTimeOffset.Now;
+            booking.CreatedAt = DateTimeOffset.Now;
+            _appContext.SaveChanges();
+        }
+
         public IList<ClientBooking> FilterBookings(int restaurantId, FilterCriteria filterCriteria)
         {
             var bookings = _appContext.Bookings
@@ -74,9 +90,21 @@ namespace Api.Data
                 .ToList();
         }
 
-        public Booking GetBookingById(int id)
+        public ClientBooking GetBookingById(int id)
         {
-            return _appContext.Bookings.Find(id);
+            var booking = _appContext.Bookings.Find(id);
+            var menuName = _appContext.Menus.Find(booking.MenuId).Name;
+            return new ClientBooking
+            {
+                Id = booking.Id,
+                FirstName = booking.OrganiserForename,
+                Surname = booking.OrganiserSurname,
+                TelephoneNumber = booking.OrganiserTelephoneNumber,
+                EmailAddress = booking.OrganiserEmailAddress,
+                StartingAt = booking.StartingAt,
+                NumberOfDiners = booking.NumberOfDiners,
+                Menu = menuName
+            };            
         }
     }
 }

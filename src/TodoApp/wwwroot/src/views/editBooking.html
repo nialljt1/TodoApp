@@ -14,42 +14,42 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" lpformnum="1" submit.delegate = "addBooking()">
+                                <form role="form" lpformnum="1" submit.delegate="updateBooking()">
                                     <fieldset class="form-group">
                                         <legend>Organiser details</legend>
                                         <div class="form-group">
                                             <label for="firstName">First name</label>
-                                            <input id="firstName" value.bind = "firstName" class="form-control" placeholder="Enter organiser first name">
+                                            <input id="firstName" value.bind="booking.firstName" class="form-control" placeholder="Enter organiser first name">
                                         </div>
                                         <div class="form-group">
                                             <label for="surname">Surname</label>
-                                            <input id="surname" value.bind = "surname" class="form-control" placeholder="Enter organiser surname">
+                                            <input id="surname" value.bind="booking.surname" class="form-control" placeholder="Enter organiser surname">
                                         </div>
                                         <div class="form-group">
                                             <label for="emailAddress">Email address</label>
-                                            <input id="emailAddress" value.bind = "emailAddress" class="form-control" placeholder="Enter organiser email address">
+                                            <input id="emailAddress" value.bind = "booking.emailAddress" class="form-control" placeholder="Enter organiser email address">
                                         </div>
                                         <div class="form-group">
                                             <label for="telephoneNumber">Telephone Number</label>
-                                            <input id="telephoneNumber" value.bind = "telephoneNumber" class="form-control" placeholder="Enter organiser telephone number">
+                                            <input id="telephoneNumber" value.bind="booking.telephoneNumber" class="form-control" placeholder="Enter organiser telephone number">
                                         </div>
                                     </fieldset>
                                     <fieldset class="form-group">
                                         <legend>Booking Details</legend>
                                         <div class="form-group">
                                             <label for="bookingDate">Date</label>
-                                            <input id="bookingDate" value.bind="bookingDate" class="form-control date" datepicker placeholder="Enter date of booking">
+                                            <input id="bookingDate" value.bind="booking.bookingDate" class="form-control date" datepicker placeholder="Enter date of booking">
                                         </div>
                                         <div class="form-group">
                                             <label for="bookingTime">Time</label>
-                                            <input id="bookingTime" value.bind = "bookingTime" class="form-control time" placeholder="Enter time of booking" type="time">
+                                            <input id="bookingTime" value.bind = "booking.bookingTime" class="form-control time" placeholder="Enter time of booking" type="time">
                                         </div>
                                         <div class="form-group">
                                             <label for="numberOfDiners">Number of diners</label>
-                                            <input id="numberOfDiners" value.bind="numberOfDiners" class="form-control number" placeholder="Enter number of diners" type="number">
+                                            <input id="numberOfDiners" value.bind="booking.numberOfDiners" class="form-control number" placeholder="Enter number of diners" type="number">
                                         </div>
                                     </fieldset>                                    
-                                    <button type="submit" class="btn btn-default">Submit Button</button>                                   
+                                    <button type="submit" class="btn btn-default">Save</button>                                   
                                 </form>
                             </div>
                         </div>

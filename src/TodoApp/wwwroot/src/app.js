@@ -37,6 +37,7 @@ System.register(["./views/baseViewModel", "aurelia-framework", "aurelia-router"]
                             _this.isLoggedIn = true;
                         }
                         else {
+                            _this.baseViewModel.mgr.signinRedirect();
                             _this.isLoggedIn = false;
                         }
                     });

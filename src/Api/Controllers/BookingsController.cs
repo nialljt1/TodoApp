@@ -41,10 +41,28 @@ namespace Api.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("Update", Name = "UpdateBooking")]
+        public IActionResult Update([FromBody] ClientBooking booking)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            try
+            {
+                Repo.UpdateBooking(booking);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
         // GET api/bookings/2
-        [HttpGet("{id}")]
-        [Route("{id}", Name = "GetBookingByIdRoute")]
-        public Booking Get(int id)
+        [HttpGet()]
+        [Route("GetBookingById/{id}", Name = "GetBookingById")]
+        public ClientBooking GetBookingById(int id)
         {
             return Repo.GetBookingById(id);
         }

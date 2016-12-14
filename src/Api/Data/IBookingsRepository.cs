@@ -7,7 +7,9 @@ namespace Api.Data
     public interface IBookingsRepository
     {
         int AddBooking(ClientBooking booking);
-        Booking GetBookingById(int id);
+
+        void UpdateBooking(ClientBooking booking);
+        ClientBooking GetBookingById(int id);
         IList<ClientBooking> FilterBookings(int restaurantId, FilterCriteria filterCriteria);
     }
 }

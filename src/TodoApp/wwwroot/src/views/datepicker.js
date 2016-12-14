@@ -12,8 +12,6 @@ export class DatePicker {
         $(this.element).datepicker({
             dateFormat: 'dd/mm/yy',   
             onSelect: function(dateText, _this) {
-                debugger;
-                ////Bookings.fetchBookings();
                  $(this).change();
             }        
         })

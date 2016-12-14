@@ -25,6 +25,7 @@ export class App {
                 _this.isLoggedIn = true;                
             }
             else {
+                _this.baseViewModel.mgr.signinRedirect();
                 _this.isLoggedIn = false;
             }
         });

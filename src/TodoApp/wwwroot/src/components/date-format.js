@@ -13,6 +13,12 @@ System.register(["moment"], function(exports_1, context_1) {
                 toView(value) {
                     return moment_1.default(value).format("DD/MM/YYYY hh:mm");
                 }
+                toDate(value) {
+                    return moment_1.default(value).format("DD/MM/YYYY");
+                }
+                toTime(value) {
+                    return moment_1.default(value).format("hh:mm");
+                }
             };
             exports_1("DateFormatValueConverter", DateFormatValueConverter);
         }
