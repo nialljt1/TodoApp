@@ -4,6 +4,7 @@ import { inject } from "aurelia-framework";
 import { HttpClient, json } from "aurelia-fetch-client";
 import { Router } from 'aurelia-router';
 
+
 @inject(BaseViewModel, DateFormatValueConverter, HttpClient, json, Router)
 export class EditBooking {
     booking: IBooking;
@@ -86,6 +87,7 @@ export class EditBooking {
                 body: json(booking)
 
             }).then(response => {
+                ohSnap('Succefully created your account');
                 console.log("booking added: ", response);
             });
 

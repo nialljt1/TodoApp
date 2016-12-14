@@ -30,7 +30,7 @@ export class AddBooking {
     }
 
     addBooking() {
-        var _this = this;
+        var _this = this;        
         this.baseViewModel.mgr.getUser().then(function (user) {
             var newBooking = {
                 firstName: _this.firstName,
@@ -61,7 +61,8 @@ export class AddBooking {
                 body: json(newBooking)
 
             }).then(response => {
-                console.log("booking added: ", response);
+                $.notify("booking added");
+                ////console.log("booking added: ", response);
             });
 
         });    

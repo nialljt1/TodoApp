@@ -62,7 +62,8 @@ System.register(["./baseViewModel", "./../Components/date-format", "aurelia-fram
                             method: "post",
                             body: aurelia_fetch_client_1.json(newBooking)
                         }).then(response => {
-                            console.log("booking added: ", response);
+                            $.notify("booking added");
+                            ////console.log("booking added: ", response);
                         });
                     });
                 }

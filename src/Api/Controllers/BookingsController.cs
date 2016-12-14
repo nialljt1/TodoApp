@@ -32,7 +32,8 @@ namespace Api.Controllers
                 var bookingId = Repo.AddBooking(booking);
                 var url = Url.RouteUrl("GetBookingByIdRoute", new { id = bookingId }, Request.Scheme,
                     Request.Host.ToUriComponent());
-                return Created(url, booking);
+                // TODO: Need to handle navigating to edit page after adding
+                return Ok(bookingId);
 
             }
             catch (Exception ex)
