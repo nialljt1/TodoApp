@@ -1,8 +1,9 @@
-﻿import { inject } from "aurelia-framework";
+﻿import { BaseViewModel } from "./baseViewModel";
+import { inject } from "aurelia-framework";
 import { HttpClient, json } from "aurelia-fetch-client";
 import { Router } from 'aurelia-router';
 
-@inject(HttpClient, json, Router)
+@inject(BaseViewModel, HttpClient, json, Router)
 export class EditBooking {
     firstName: string;
     surname: string;
@@ -12,10 +13,9 @@ export class EditBooking {
     bookingTime: string;
     numberOfDiners: number;
     startingAt: Date;
+    baseViewModel: BaseViewModel;
 
     apiUrl: string;
-    mgr: Oidc.UserManager;
-    message: string;
 
     constructor(private http: HttpClient) {
     }
@@ -23,19 +23,7 @@ export class EditBooking {
     activate() {
         ////this.apiUrl = "http://localhost:5001/TodoAppApi/Bookings/"
         this.apiUrl = "http://localhost:5001/Bookings/"
-        this.setup();
-    }
-
-    setup() {
-        var config = {
-            authority: "http://localhost/IdentityServer2",
-            client_id: "js",
-            redirect_uri: "http://localhost/TodoApp/src/callback.html",
-            response_type: "id_token token",
-            scope: "openid profile api1",
-            post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
-        };
-        this.mgr = new Oidc.UserManager(config);        
+        this.baseViewModel.setup();
     }
 
     loadBooking()
@@ -45,7 +33,7 @@ export class EditBooking {
 
     addBooking() {
         var _this = this;
-        this.mgr.getUser().then(function (user) {
+        this.baseViewModel.mgr.getUser().then(function (user) {
             var newBooking = {
                 firstName: _this.firstName,
                 surname: _this.surname,

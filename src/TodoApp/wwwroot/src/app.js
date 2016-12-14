@@ -1,4 +1,4 @@
-System.register(["aurelia-framework", "aurelia-router"], function(exports_1, context_1) {
+System.register(["./views/baseViewModel", "aurelia-framework", "aurelia-router"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7,10 +7,13 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
         else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
-    var aurelia_framework_1, aurelia_router_1;
+    var baseViewModel_1, aurelia_framework_1, aurelia_router_1;
     var App;
     return {
         setters:[
+            function (baseViewModel_1_1) {
+                baseViewModel_1 = baseViewModel_1_1;
+            },
             function (aurelia_framework_1_1) {
                 aurelia_framework_1 = aurelia_framework_1_1;
             },
@@ -19,26 +22,17 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
             }],
         execute: function() {
             App = class App {
-                constructor() {
+                constructor(baseViewModel) {
                     this.dateValue = null;
+                    this.baseViewModel = baseViewModel;
                 }
                 activate() {
+                    this.baseViewModel.setup();
                     this.setup();
                 }
                 setup() {
-                    var config = {
-                        authority: "http://localhost/IdentityServer2",
-                        client_id: "js",
-                        redirect_uri: "http://localhost/TodoApp/src/callback.html",
-                        response_type: "id_token token",
-                        scope: "openid profile api1",
-                        post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
-                    };
-                    this.mgr = new Oidc.UserManager(config);
-                    var mgr = this.mgr;
-                    var isLoggedIn = false;
                     var _this = this;
-                    this.mgr.getUser().then(function (user) {
+                    this.baseViewModel.mgr.getUser().then(function (user) {
                         if (user) {
                             _this.isLoggedIn = true;
                         }
@@ -51,7 +45,6 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
                     this.router = router;
                     config.title = "Todo App";
                     config.map([
-                        { route: ["booking"], moduleId: "./views/booking", nav: true, title: "Booking" },
                         { route: ["", "welcome"], moduleId: "./views/welcome", nav: true, title: "Welcome" },
                         { route: ["help"], moduleId: "./views/help", nav: true, title: "Help" },
                         { route: ["about"], moduleId: "./views/about", nav: true, title: "About" },
@@ -63,11 +56,11 @@ System.register(["aurelia-framework", "aurelia-router"], function(exports_1, con
                     ]);
                 }
                 logout() {
-                    this.mgr.signoutRedirect();
+                    this.baseViewModel.mgr.signoutRedirect();
                 }
             };
             App = __decorate([
-                aurelia_framework_1.inject(aurelia_router_1.Router)
+                aurelia_framework_1.inject(baseViewModel_1.BaseViewModel, aurelia_router_1.Router)
             ], App);
             exports_1("App", App);
         }

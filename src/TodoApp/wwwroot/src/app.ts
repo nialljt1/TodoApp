@@ -1,33 +1,26 @@
-﻿import { inject } from "aurelia-framework";
+﻿import { BaseViewModel } from "./views/baseViewModel";
+import { inject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 
-@inject(Router)
+@inject(BaseViewModel, Router)
 export class App {
     router: Router;
-    mgr: Oidc.UserManager;
     isLoggedIn: boolean;
     dateValue = null;
+    baseViewModel: BaseViewModel;
 
-    constructor() { }
+    constructor(baseViewModel: BaseViewModel) {
+        this.baseViewModel = baseViewModel;
+    }
 
     activate() {
+        this.baseViewModel.setup();
         this.setup();
     }
 
     setup() {
-        var config = {
-            authority: "http://localhost/IdentityServer2",
-            client_id: "js",
-            redirect_uri: "http://localhost/TodoApp/src/callback.html",
-            response_type: "id_token token",
-            scope: "openid profile api1",
-            post_logout_redirect_uri: "http://localhost/TodoApp/index.html",
-        };
-        this.mgr = new Oidc.UserManager(config);
-        var mgr = this.mgr;
-        var isLoggedIn = false;
         var _this = this;
-        this.mgr.getUser().then(function (user) {
+        this.baseViewModel.mgr.getUser().then(function (user) {
             if (user) {
                 _this.isLoggedIn = true;                
             }
@@ -43,7 +36,6 @@ export class App {
         config.title = "Todo App";
         config.map(
             [
-                { route: ["booking"], moduleId: "./views/booking", nav: true, title: "Booking" },
                 { route: ["", "welcome"], moduleId: "./views/welcome", nav: true, title: "Welcome" },
                 { route: ["help"], moduleId: "./views/help", nav: true, title: "Help" },
                 { route: ["about"], moduleId: "./views/about", nav: true, title: "About" },
@@ -56,6 +48,6 @@ export class App {
     }
 
     logout() {
-        this.mgr.signoutRedirect();
+        this.baseViewModel.mgr.signoutRedirect();
     }
 }
