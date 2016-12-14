@@ -12,4 +12,10 @@ export class DateFormatValueConverter {
     toTime(value) {
         return moment(value).format("hh:mm");
     }
+
+    toUSDate(value) {
+        var values = value.split('/');
+        var test = values[1] + "/" + values[0] + "/" + values[2];
+        return test;
+    }
 }

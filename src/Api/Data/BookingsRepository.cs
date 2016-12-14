@@ -28,6 +28,8 @@ namespace Api.Data
             booking.LastUpdatedById = "0d20e665-2859-418e-ae12-bece795627df";
             booking.LastUpdatedAt = DateTimeOffset.Now;
             booking.CreatedAt = DateTimeOffset.Now;
+            // TODO: remove hardcoding of menu id
+            booking.MenuId = 1;
             _appContext.Bookings.Add(booking);
             _appContext.SaveChanges();
             return booking.Id;

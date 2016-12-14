@@ -64,10 +64,9 @@ export class EditBooking {
                 surname: _this.booking.surname,
                 emailAddress: _this.booking.emailAddress,
                 telephoneNumber: _this.booking.telephoneNumber,
-                startingAt: new Date(_this.booking.bookingDate + " " + _this.booking.bookingTime),
+                startingAt: new Date(_this.dateFormatValueConverter.toUSDate(_this.booking.bookingDate) + " " + _this.booking.bookingTime),
                 numberOfDiners: _this.booking.numberOfDiners
             };
-
             if (user) {
                 _this.http.configure(config => {
                     config

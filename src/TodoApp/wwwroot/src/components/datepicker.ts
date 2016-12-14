@@ -10,12 +10,18 @@ export class DatePicker {
     }
 
     attached() {
-        jQuery.noConflict();
-        jQuery(this.element).datepicker().on("change", e => fireEvent(e.target, "input"));
+        ////$.noConflict();
+        $(this.element).datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateText, _this) {
+                $(this).change();
+            }
+        })
+        ////$(this.element).datepicker().on("change", e => fireEvent(e.target, "input"));
     }
 
     detached() {
-        jQuery(this.element).datepicker("destroy").off("change");
+        $(this.element).datepicker("destroy").off("change");
     }
 }
 

@@ -19,6 +19,11 @@ System.register(["moment"], function(exports_1, context_1) {
                 toTime(value) {
                     return moment_1.default(value).format("hh:mm");
                 }
+                toUSDate(value) {
+                    var values = value.split('/');
+                    var test = values[1] + "/" + values[0] + "/" + values[2];
+                    return test;
+                }
             };
             exports_1("DateFormatValueConverter", DateFormatValueConverter);
         }

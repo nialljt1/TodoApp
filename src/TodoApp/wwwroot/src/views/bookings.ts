@@ -67,9 +67,9 @@ export class Bookings {
                     // TODO: Resolve timing issue in table
                     // TODO: filtering leaves existing data in table - fix
                     setTimeout(function () {
-                        $('#example2').DataTable();
+                        ////$('#example2').DataTable();
                         $('#example2').show();
-                    }, 1000);
+                    }, 500);
                 });
         });
     }

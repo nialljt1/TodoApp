@@ -1,8 +1,9 @@
 ﻿import { BaseViewModel } from "./baseViewModel";
+import { DateFormatValueConverter } from "./../Components/date-format";
 import { inject } from "aurelia-framework";
 import { HttpClient, json } from "aurelia-fetch-client";
 
-@inject(BaseViewModel, HttpClient, json)
+@inject(BaseViewModel, DateFormatValueConverter, HttpClient, json)
 export class AddBooking {
     firstName: string;
     surname: string;
@@ -13,11 +14,13 @@ export class AddBooking {
     numberOfDiners: number;
     startingAt: Date;
     baseViewModel: BaseViewModel;
+    dateFormatValueConverter: DateFormatValueConverter;
 
     apiUrl: string;
 
-    constructor(baseViewModel: BaseViewModel, private http: HttpClient) {
+    constructor(baseViewModel: BaseViewModel, dateFormatValueConverter: DateFormatValueConverter, private http: HttpClient) {
         this.baseViewModel = baseViewModel
+        this.dateFormatValueConverter = dateFormatValueConverter;
     }
 
     activate() {
@@ -34,7 +37,7 @@ export class AddBooking {
                 surname: _this.surname,
                 emailAddress: _this.emailAddress,
                 telephoneNumber: _this.telephoneNumber,
-                startingAt: new Date(_this.bookingDate + " " + _this.bookingTime),
+                startingAt: new Date(_this.dateFormatValueConverter.toUSDate(_this.bookingDate) + " " + _this.bookingTime),
                 numberOfDiners: _this.numberOfDiners
             };
 
